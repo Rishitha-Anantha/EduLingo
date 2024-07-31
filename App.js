@@ -1,10 +1,11 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {View, Text, Image, StyleSheet } from 'react-native';
+const Img = require("./assets/image/4.jpg");
 
-export default function App() {
-  return(
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
+export default function App(){
+  return (
+    <View style= {styles.container}>
+      <Text>Welcome to Edulingo</Text>
+      <Image source={Img} style={{width: 300, height: 300}} />
     </View>
   );
 }
@@ -12,8 +13,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
