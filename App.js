@@ -1,5 +1,5 @@
 import {View, Text, Image, StyleSheet } from 'react-native';
-const Img = require("./assets/image/2.jpg");
+const Img = require("./assets/image/9.jpg");
 
 export default function App(){
   return (
