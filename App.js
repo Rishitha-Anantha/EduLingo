@@ -1,20 +1,18 @@
-import {View, Text, Image, StyleSheet } from 'react-native';
-const Img = require("./assets/image/9.jpg");
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './screens/Home';
 
-export default function App(){
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
   return (
-    <View style= {styles.container}>
-      <Text>Welcome to Edulingo</Text>
-      <Image source={Img} />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+export default App;
