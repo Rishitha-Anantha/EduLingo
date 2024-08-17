@@ -13,21 +13,21 @@ import { ProgressBar } from "react-native-paper";
 const Chapters= ({navigation}) => {
 
   const chapters = [
-    { name: "1. Single Alphabet Letters", screen: "Lessons" },
-    { name: "2. Combined Alphabet Letters", screen: "Lessons" },
-    { name: "3. Disconnected Letters", screen: "Chapter3" },
-    { name: "4. Diacritical Marks (Vowels)", screen: "Chapter4" },
-    { name: "5. Tanween (Double Diacritics)", screen: "Chapter5" },
-    { name: "6. Exercise 1", screen: "Exercise1" },
-    { name: "7. Small Alif, Yaa, and Waaw", screen: "Chapter6" },
-    { name: "8. Letters of Elongation and Softness", screen: "Chapter7" },
-    { name: "9.Exercise 2", screen: "Exercise2" },
-    { name: "10. Sukoon (Vowelless Marks)", screen: "Chapter8" },
-    { name: "11. Exercise 3", screen: "Exercise3" },
-    { name: "12. Shaddah (Gemination Mark)", screen: "Chapter9" },
-    { name: "13. Exercise 4", screen: "Exercise4" },
-    { name: "14. Exercise 5", screen: "Exercise5" },
-    { name: "15. Exercise 6", screen: "Exercise6" },
+    { name: "1. Single Alphabet Letters", id: 1 },
+    { name: "2. Combined Alphabet Letters", id : 2 },
+    { name: "3. Disconnected Letters", id : 3 },
+    { name: "4. Diacritical Marks (Vowels)", id : 4 },
+    { name: "5. Tanween (Double Diacritics)", id : 5 },
+    { name: "6. Exercise 1", id : 6},
+    { name: "7. Small Alif, Yaa, and Waaw", id : 7 },
+    { name: "8. Letters of Elongation and Softness", id : 8},
+    { name: "9.Exercise 2", id : 9 },
+    { name: "10. Sukoon (Vowelless Marks)", id : 10 },
+    { name: "11. Exercise 3", id : 11 },
+    { name: "12. Shaddah (Gemination Mark)", id: 12 },
+    { name: "13. Exercise 4", id : 13 },
+    { name: "14. Exercise 5", id : 14},
+    { name: "15. Exercise 6", id : 15 },
   ];
 
   const completedChapters = 5; // Replace this with the actual count of completed chapters
@@ -62,7 +62,7 @@ const Chapters= ({navigation}) => {
           <TouchableOpacity
             key={index}
             style={styles.chapterButton}
-            onPress={() => navigation.navigate("Lessons")}
+            onPress={() => navigation.navigate('Lessons', {chapter.id})}
           >
             <Text style={styles.chapterText}>{chapter.name}</Text>
           </TouchableOpacity>

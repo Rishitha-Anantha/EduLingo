@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import Home from "./screens/Home";
 import Chapters from "./screens/Chapters";
 import Lessons from "./screens/Lessons";
+import initializeDatabase from "./screens/sample";
 const Stack = createNativeStackNavigator();
 
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
@@ -27,6 +28,11 @@ const App = () => {
       <NavigationContainer>
         {hideSplashScreen ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+              name="sample"
+              component={initializeDatabase}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Home"
               component={Home}

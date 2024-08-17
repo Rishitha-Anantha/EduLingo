@@ -1,142 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, ScrollView, Image } from "react-native";
-import SQLite from "react-native-sqlite-storage";
-import { Color, FontFamily, FontSize } from "../GlobalStyles";
+import * as React, { useState, useEffect } from "react";
+import { Text, StyleSheet, View } from "react-native";
+import * as SQLite from 'expo-sqlite';
+import { Color, FontFamily, Border, FontSize } from "../GlobalStyles";
 
-// Open the SQLite database
-const db = SQLite.openDatabase(
-  { name: "Arabic_Language.db", location: "/assets/db/Arabic_Language.db" },
-  () => {
-    console.log("Database opened successfully");
-  },
-  (error) => {
-    console.log("Error opening database: ", error);
-  }
-);
-
-// Function to fetch lessons from the database based on the category number
-const fetchLessons = async (categoryNo) => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        `SELECT ArabicText FROM Arabic_Learning_data WHERE CategoryNo = ?`,
-        [categoryNo],
-        (tx, results) => {
-          const len = results.rows.length;
-          if (len > 0) {
-            let lessons = [];
-            for (let i = 0; i < len; i++) {
-              let row = results.rows.item(i);
-              lessons.push({
-                id: i,
-                title: row.ArabicText
-              });
-            }
-            resolve(lessons);
-          } else {
-            resolve([]);
-          }
-        },
-        (error) => {
-          console.log("Error fetching lessons: ", error);
-          reject([]);
-        }
-      );
-    });
-  });
-};
-
+const db = SQLite.openDatabase('Arabic_Language.db');
 
 const Lessons = ({ route }) => {
-  const { chapterId } = route.params;
+  const { chapterId } = route.params; // Getting the chapter ID passed from the previous screen
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
-    const loadLessons = async () => {
-      const lessons = await fetchLessons(chapterId);
-      setLessons(lessons);
-    };
-    loadLessons();
-  }, [chapterId]);
+    fetchLessons();
+  }, []);
+
+  const fetchLessons = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT ArabicText FROM Arabic_Learning_data WHERE CategoryNo = ?',
+        [chapterId],
+        (_, { rows }) => {
+          setLessons(rows._array);
+        },
+        (_, error) => {
+          console.error(error);
+        }
+      );
+    });
+  };
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.edulingo}>Edulingo</Text>
+    <View style={[styles.individualLevel, styles.rectangleGroupBg]}>
+      <View style={[styles.textParent, styles.parentPosition]}>
+        <Text style={[styles.text, styles.textTypo6]}>{`
+`}</Text>
+        <Text style={[styles.edulingo, styles.textTypo6]}>Edulingo</Text>
+        {/* Add other UI components as needed */}
       </View>
-
-      {/* Chapter Title */}
-      <View style={styles.chapterHeader}>
-        <Text style={styles.chapterTitle}>Chapter {chapterId}</Text>
-        <Text style={styles.lessonProgress}>
-          Total: {lessons.length} Lessons
-        </Text>
+      <View style={[styles.rectangleParent, styles.parentPosition]}>
+        <View style={styles.rectangleView} />
+        <Text style={[styles.home, styles.textTypo6]}>Home</Text>
       </View>
-
-      {/* Lessons List */}
-      <ScrollView style={styles.lessonsContainer}>
-        {lessons.map((lesson) => (
-          <View key={lesson.id} style={styles.lesson}>
-            <Text style={styles.lessonText}>{lesson.title}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      
+      {/* Dynamically render lessons based on the fetched data */}
+      {lessons.map((lesson, index) => (
+        <View key={index} style={[styles.lessonContainer, styles.individualChildLayout]}>
+          <Text style={[styles.lessonText, styles.textTypo5]}>{lesson.ArabicText}</Text>
+        </View>
+      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.colorWhite,
-  },
-  header: {
-    width: "100%",
-    padding: 20,
-    backgroundColor: Color.colorPlum,
-    alignItems: "center",
-  },
-  edulingo: {
-    fontSize: FontSize.size_5xl,
-    color: Color.colorWhite,
-    fontFamily: FontFamily.inknutAntiquaRegular,
-  },
-  chapterHeader: {
-    padding: 20,
-    backgroundColor: Color.colorPlum,
-  },
-  chapterTitle: {
-    fontSize: FontSize.size_4xl,
-    color: Color.colorWhite,
-    fontFamily: FontFamily.inknutAntiquaRegular,
+  // Add the previous styles here
+  lessonContainer: {
+    backgroundColor: Color.colorSpringgreen,
     marginBottom: 10,
-  },
-  lessonProgress: {
-    fontSize: FontSize.size_lg,
-    color: Color.colorWhite,
-    fontFamily: FontFamily.inknutAntiquaRegular,
-  },
-  lessonsContainer: {
     padding: 20,
-  },
-  lesson: {
-    backgroundColor: Color.colorLightGray,
-    padding: 15,
-    marginVertical: 5,
-    borderRadius: 10,
-    alignItems: "center",
+    borderRadius: Border.br_xl,
   },
   lessonText: {
-    fontSize: FontSize.size_xl,
+    textAlign: "center",
+    fontFamily: FontFamily.inknutAntiquaMedium,
+    fontSize: FontSize.size_base,
     color: Color.colorBlack,
-    fontFamily: FontFamily.inknutAntiquaRegular,
-    marginBottom: 10,
   },
-  lessonImage: {
-    width: 100,
-    height: 100,
-  },
+  // Add the rest of your existing styles here...
 });
 
 export default Lessons;
