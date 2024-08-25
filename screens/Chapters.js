@@ -13,8 +13,8 @@ import { ProgressBar } from "react-native-paper";
 const Chapters= ({navigation}) => {
 
   const chapters = [
-    { name: "1. Single Alphabet Letters", id: 1 },
-    { name: "2. Combined Alphabet Letters", id : 2 },
+    { name: "1. Single Alphabet Letters", id : 1},
+    { name: "2. Combined Alphabet Letters", id : 2},
     { name: "3. Disconnected Letters", id : 3 },
     { name: "4. Diacritical Marks (Vowels)", id : 4 },
     { name: "5. Tanween (Double Diacritics)", id : 5 },
@@ -62,7 +62,6 @@ const Chapters= ({navigation}) => {
           <TouchableOpacity
             key={index}
             style={styles.chapterButton}
-            onPress={() => navigation.navigate('Lessons', {chapter.id})}
           >
             <Text style={styles.chapterText}>{chapter.name}</Text>
           </TouchableOpacity>
