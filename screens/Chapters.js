@@ -10,7 +10,7 @@ import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 import { ProgressBar } from "react-native-paper";
 
 
-const Chapters= ({navigation}) => {
+const Chapters= () => {
 
   const chapters = [
     { name: "1. Single Alphabet Letters", id : 1},
